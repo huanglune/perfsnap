@@ -1,15 +1,15 @@
-# Install capture-performance-metrics for Codex
+# Install perfsnap for Codex
 
 Follow these steps exactly to install or update the skill:
 
 ## Step 1: Clone or update the repository
 
 ```bash
-REPO_DIR="$HOME/.codex/capture-performance-metrics"
+REPO_DIR="$HOME/.codex/perfsnap"
 if [ -d "$REPO_DIR/.git" ]; then
   git -C "$REPO_DIR" pull
 else
-  git clone git@github.com:huanglune/capture-performance-metrics.git "$REPO_DIR"
+  git clone git@github.com:huanglune/perfsnap.git "$REPO_DIR"
 fi
 ```
 
@@ -17,13 +17,13 @@ fi
 
 ```bash
 mkdir -p ~/.agents/skills
-ln -sf ~/.codex/capture-performance-metrics/capture-performance-metrics ~/.agents/skills/capture-performance-metrics
+ln -sf ~/.codex/perfsnap/perfsnap ~/.agents/skills/perfsnap
 ```
 
 ## Step 3: Ensure scripts are executable
 
 ```bash
-chmod +x ~/.agents/skills/capture-performance-metrics/scripts/collect_pidstat.sh
+chmod +x ~/.agents/skills/perfsnap/scripts/collect_pidstat.sh
 ```
 
 ## Step 4: Verify prerequisites
@@ -37,12 +37,12 @@ command -v python3 >/dev/null 2>&1 && echo "OK: python3" || echo "MISSING: insta
 ## Step 5: Verify
 
 ```bash
-test -f ~/.agents/skills/capture-performance-metrics/SKILL.md && echo "OK: skill installed" || echo "FAIL: SKILL.md not found"
+test -f ~/.agents/skills/perfsnap/SKILL.md && echo "OK: skill installed" || echo "FAIL: SKILL.md not found"
 ```
 
 ## Uninstall
 
 ```bash
-rm -f ~/.agents/skills/capture-performance-metrics
-rm -rf ~/.codex/capture-performance-metrics
+rm -f ~/.agents/skills/perfsnap
+rm -rf ~/.codex/perfsnap
 ```

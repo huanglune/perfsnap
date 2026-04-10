@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""End-to-end test runner for capture-performance-metrics.
+"""End-to-end test runner for perfsnap.
 
 Runs real workloads through collect_pidstat.sh, generates synthetic CSVs for
 edge cases, then validates the output. All SVGs are saved to examples/ for
@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-SCRIPTS = REPO / "capture-performance-metrics" / "scripts"
+SCRIPTS = REPO / "perfsnap" / "scripts"
 WORKLOADS = REPO / "tests" / "workloads"
 OUTPUT = REPO / "tests" / "output"
 EXAMPLES = REPO / "examples"

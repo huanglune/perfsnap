@@ -1,4 +1,4 @@
-# Install capture-performance-metrics for Claude Code
+# Install perfsnap for Claude Code
 
 Follow these steps exactly to install or update the skill:
 
@@ -12,11 +12,11 @@ CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 
 ```bash
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-REPO_DIR="$CLAUDE_DIR/repos/capture-performance-metrics"
+REPO_DIR="$CLAUDE_DIR/repos/perfsnap"
 if [ -d "$REPO_DIR/.git" ]; then
   git -C "$REPO_DIR" pull
 else
-  git clone git@github.com:huanglune/capture-performance-metrics.git "$REPO_DIR"
+  git clone git@github.com:huanglune/perfsnap.git "$REPO_DIR"
 fi
 ```
 
@@ -26,16 +26,16 @@ This is idempotent — safe to run on both install and update:
 
 ```bash
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-REPO_DIR="$CLAUDE_DIR/repos/capture-performance-metrics"
+REPO_DIR="$CLAUDE_DIR/repos/perfsnap"
 mkdir -p "$CLAUDE_DIR/skills"
-ln -sf "$REPO_DIR/capture-performance-metrics" "$CLAUDE_DIR/skills/capture-performance-metrics"
+ln -sf "$REPO_DIR/perfsnap" "$CLAUDE_DIR/skills/perfsnap"
 ```
 
 ## Step 4: Ensure scripts are executable
 
 ```bash
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-chmod +x "$CLAUDE_DIR/skills/capture-performance-metrics/scripts/collect_pidstat.sh"
+chmod +x "$CLAUDE_DIR/skills/perfsnap/scripts/collect_pidstat.sh"
 ```
 
 ## Step 5: Verify prerequisites
@@ -50,13 +50,13 @@ command -v python3 >/dev/null 2>&1 && echo "OK: python3" || echo "MISSING: insta
 
 ```bash
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-test -f "$CLAUDE_DIR/skills/capture-performance-metrics/SKILL.md" && echo "OK: skill installed" || echo "FAIL: SKILL.md not found"
+test -f "$CLAUDE_DIR/skills/perfsnap/SKILL.md" && echo "OK: skill installed" || echo "FAIL: SKILL.md not found"
 ```
 
 ## Uninstall
 
 ```bash
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-rm -f "$CLAUDE_DIR/skills/capture-performance-metrics"
-rm -rf "$CLAUDE_DIR/repos/capture-performance-metrics"
+rm -f "$CLAUDE_DIR/skills/perfsnap"
+rm -rf "$CLAUDE_DIR/repos/perfsnap"
 ```

@@ -1,5 +1,5 @@
 ---
-name: capture-performance-metrics
+name: perfsnap
 description: >-
   Collect RSS memory, CPU usage, and optional thread-level metrics for any local
   command using pidstat, then export CSV and render an SVG chart. Use this skill
@@ -10,7 +10,7 @@ description: >-
   monitoring for a local command.
 ---
 
-# Capture Performance Metrics
+# Perfsnap
 
 Collect `pidstat`-based performance data for a command, convert to CSV, and render a two-panel SVG chart (RSS MiB + CPU %).
 
@@ -28,11 +28,11 @@ Collect `pidstat`-based performance data for a command, convert to CSV, and rend
 3. **Resolve the skill's script directory** — the scripts live in this skill's `scripts/` subdirectory. Locate this SKILL.md first, then derive the scripts path:
 
    ```bash
-   SKILL_DIR="$(dirname "$(find "${CLAUDE_CONFIG_DIR:-$HOME/.claude}" ~/.codex ~/.agents -path '*/capture-performance-metrics/SKILL.md' -print -quit 2>/dev/null)")"
+   SKILL_DIR="$(dirname "$(find "${CLAUDE_CONFIG_DIR:-$HOME/.claude}" ~/.codex ~/.agents -path '*/perfsnap/SKILL.md' -print -quit 2>/dev/null)")"
    if [ -z "$SKILL_DIR" ] || [ "$SKILL_DIR" = "." ]; then
-     echo "ERROR: capture-performance-metrics skill not found" >&2
+     echo "ERROR: perfsnap skill not found" >&2
      # Fall back: the skill might be in the current project
-     SKILL_DIR="$(find . -path '*/capture-performance-metrics/SKILL.md' -print -quit 2>/dev/null | xargs dirname 2>/dev/null)"
+     SKILL_DIR="$(find . -path '*/perfsnap/SKILL.md' -print -quit 2>/dev/null | xargs dirname 2>/dev/null)"
    fi
    ```
 

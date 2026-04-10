@@ -1,4 +1,4 @@
-# capture-performance-metrics
+# perfsnap
 
 A coding agent skill that collects RSS memory, CPU usage, and optional thread-level metrics for any local command using `pidstat`, then exports CSV and renders a two-panel SVG chart.
 
@@ -18,7 +18,7 @@ When you ask your agent to profile a command (e.g. "how much memory does this us
 Tell Claude Code:
 
 ```
-Fetch and follow instructions from https://raw.githubusercontent.com/huanglune/capture-performance-metrics/refs/heads/main/.claude/INSTALL.md
+Fetch and follow instructions from https://raw.githubusercontent.com/huanglune/perfsnap/refs/heads/main/.claude/INSTALL.md
 ```
 
 ### Codex
@@ -26,7 +26,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/huanglune/c
 Tell Codex:
 
 ```
-Fetch and follow instructions from https://raw.githubusercontent.com/huanglune/capture-performance-metrics/refs/heads/main/.codex/INSTALL.md
+Fetch and follow instructions from https://raw.githubusercontent.com/huanglune/perfsnap/refs/heads/main/.codex/INSTALL.md
 ```
 
 ### Prerequisites
@@ -114,20 +114,20 @@ Once installed, just ask your agent to profile any command:
 - "Profile the memory usage of `make build`"
 - "How much RSS does `./my_benchmark` use?"
 - "Track CPU and memory while running the index builder"
-- "Capture performance metrics for this build with thread-level detail"
+- "Profile this build with thread-level detail"
 
 ### Standalone (without an agent)
 
 ```bash
 # Basic usage
-./capture-performance-metrics/scripts/collect_pidstat.sh /tmp/perf my_run -- ./my_command --flag
+./perfsnap/scripts/collect_pidstat.sh /tmp/perf my_run -- ./my_command --flag
 
 # Thread-level collection
-PIDSTAT_THREAD=1 ./capture-performance-metrics/scripts/collect_pidstat.sh /tmp/perf my_run -- ./my_command
+PIDSTAT_THREAD=1 ./perfsnap/scripts/collect_pidstat.sh /tmp/perf my_run -- ./my_command
 
 # Just convert + plot existing pidstat output
-python3 capture-performance-metrics/scripts/pidstat_to_csv.py input.pidstat output.csv
-python3 capture-performance-metrics/scripts/plot_pidstat_svg.py output.csv output.svg --title "My Run"
+python3 perfsnap/scripts/pidstat_to_csv.py input.pidstat output.csv
+python3 perfsnap/scripts/plot_pidstat_svg.py output.csv output.svg --title "My Run"
 ```
 
 ### Environment Variables
