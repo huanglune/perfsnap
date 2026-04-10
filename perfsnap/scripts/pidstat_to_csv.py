@@ -5,6 +5,7 @@ Uses header-based column detection so it works across sysstat versions.
 Supports optional PID filtering (--pid-filter) for process-tree monitoring
 and preserves thread identity (tid) when pidstat -t data is present.
 """
+
 import argparse
 import csv
 import re
@@ -57,8 +58,16 @@ HEADER_MAP = {
 }
 
 FLOAT_FIELDS = {
-    "user_pct", "system_pct", "guest_pct", "wait_pct", "cpu_pct",
-    "minflt_s", "majflt_s", "vsz_kb", "rss_kb", "mem_pct",
+    "user_pct",
+    "system_pct",
+    "guest_pct",
+    "wait_pct",
+    "cpu_pct",
+    "minflt_s",
+    "majflt_s",
+    "vsz_kb",
+    "rss_kb",
+    "mem_pct",
 }
 
 

@@ -6,6 +6,7 @@ multi-core usage with periodic bursts.
 
 Usage: python3 sim_long_duration.py <output.csv>
 """
+
 import csv
 import math
 import random
@@ -14,9 +15,23 @@ import sys
 random.seed(42)
 
 FIELDS = [
-    "sample_index", "timestamp_s", "pid", "tid", "user_pct", "system_pct",
-    "guest_pct", "wait_pct", "cpu_pct", "cpu_core", "minflt_s", "majflt_s",
-    "vsz_kb", "rss_kb", "rss_mib", "mem_pct", "command",
+    "sample_index",
+    "timestamp_s",
+    "pid",
+    "tid",
+    "user_pct",
+    "system_pct",
+    "guest_pct",
+    "wait_pct",
+    "cpu_pct",
+    "cpu_core",
+    "minflt_s",
+    "majflt_s",
+    "vsz_kb",
+    "rss_kb",
+    "rss_mib",
+    "mem_pct",
+    "command",
 ]
 
 DURATION = 7200  # 2 hours
@@ -46,20 +61,27 @@ def main():
             cpu = max(0, cpu)
             rss_kb = rss_mib * 1024
 
-            w.writerow({
-                "sample_index": i, "timestamp_s": 1000 + t,
-                "pid": "99999", "tid": "",
-                "user_pct": f"{cpu * 0.85:.2f}",
-                "system_pct": f"{cpu * 0.15:.2f}",
-                "guest_pct": "0.00", "wait_pct": "0.00",
-                "cpu_pct": f"{cpu:.2f}", "cpu_core": "0",
-                "minflt_s": "0.00", "majflt_s": "0.00",
-                "vsz_kb": f"{rss_kb * 1.3:.0f}",
-                "rss_kb": f"{rss_kb:.0f}",
-                "rss_mib": f"{rss_mib:.2f}",
-                "mem_pct": f"{rss_mib / 32768 * 100:.2f}",
-                "command": "make",
-            })
+            w.writerow(
+                {
+                    "sample_index": i,
+                    "timestamp_s": 1000 + t,
+                    "pid": "99999",
+                    "tid": "",
+                    "user_pct": f"{cpu * 0.85:.2f}",
+                    "system_pct": f"{cpu * 0.15:.2f}",
+                    "guest_pct": "0.00",
+                    "wait_pct": "0.00",
+                    "cpu_pct": f"{cpu:.2f}",
+                    "cpu_core": "0",
+                    "minflt_s": "0.00",
+                    "majflt_s": "0.00",
+                    "vsz_kb": f"{rss_kb * 1.3:.0f}",
+                    "rss_kb": f"{rss_kb:.0f}",
+                    "rss_mib": f"{rss_mib:.2f}",
+                    "mem_pct": f"{rss_mib / 32768 * 100:.2f}",
+                    "command": "make",
+                }
+            )
 
     print(f"Generated {n_samples} samples -> {output}", file=sys.stderr)
 

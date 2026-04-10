@@ -8,6 +8,7 @@ Handles multi-process and multi-thread data by:
 Usage:
     python3 plot_pidstat_svg.py input.csv output.svg [--title "My Build"]
 """
+
 import argparse
 import csv
 import sys
@@ -17,8 +18,14 @@ from statistics import mean
 
 # Color palette for per-PID lines
 PID_COLORS = [
-    "#3b82f6", "#ef4444", "#22c55e", "#f59e0b",
-    "#8b5cf6", "#ec4899", "#06b6d4", "#f97316",
+    "#3b82f6",
+    "#ef4444",
+    "#22c55e",
+    "#f59e0b",
+    "#8b5cf6",
+    "#ec4899",
+    "#06b6d4",
+    "#f97316",
 ]
 TOTAL_RSS_COLOR = "#1d4ed8"
 TOTAL_CPU_COLOR = "#b91c1c"
@@ -31,7 +38,9 @@ def read_csv(path: str) -> list[dict]:
 
 def aggregate_by_timestamp(
     rows: list[dict],
-) -> tuple[list[tuple[float, float, float]], dict[str, list[tuple[float, float, float]]]]:
+) -> tuple[
+    list[tuple[float, float, float]], dict[str, list[tuple[float, float, float]]]
+]:
     """Group rows by timestamp, aggregate RSS and CPU across PIDs.
 
     For thread mode: process-level rows (tid empty) carry aggregate data per PID.
@@ -76,7 +85,11 @@ def aggregate_by_timestamp(
         total_rss = 0.0
         total_cpu = 0.0
         for pid, r in ts_pid_rows[ts].items():
-            rss = float(r["rss_mib"]) if r.get("rss_mib") else float(r.get("rss_kb", 0)) / 1024
+            rss = (
+                float(r["rss_mib"])
+                if r.get("rss_mib")
+                else float(r.get("rss_kb", 0)) / 1024
+            )
             cpu = float(r.get("cpu_pct", 0))
             total_rss += rss
             total_cpu += cpu
@@ -87,7 +100,9 @@ def aggregate_by_timestamp(
 
 
 def svg_polyline(
-    points: list[tuple[float, float]], color: str, stroke_width: float = 1.5,
+    points: list[tuple[float, float]],
+    color: str,
+    stroke_width: float = 1.5,
     dash: str = "",
 ) -> str:
     if not points:
@@ -101,8 +116,10 @@ def svg_polyline(
 
 
 def svg_filled_area(
-    points: list[tuple[float, float]], baseline_y: float,
-    color: str, opacity: float = 0.15,
+    points: list[tuple[float, float]],
+    baseline_y: float,
+    color: str,
+    opacity: float = 0.15,
 ) -> str:
     if not points:
         return ""
@@ -119,9 +136,23 @@ def _time_ticks(duration: float, max_ticks: int = 8) -> tuple[list[float], float
     labels use a consistent unit with no fractional values.
     """
     nice_steps = [
-        1, 2, 5, 10, 15, 30,               # seconds
-        60, 120, 300, 600, 900, 1800,       # minutes
-        3600, 7200, 14400, 28800, 86400,    # hours / day
+        1,
+        2,
+        5,
+        10,
+        15,
+        30,  # seconds
+        60,
+        120,
+        300,
+        600,
+        900,
+        1800,  # minutes
+        3600,
+        7200,
+        14400,
+        28800,
+        86400,  # hours / day
     ]
     raw_step = duration / max_ticks
     chosen = nice_steps[-1]
@@ -168,6 +199,7 @@ def _nice_y_ticks(raw_max: float, target_ticks: int = 5) -> list[float]:
     rough_step = raw_max / target_ticks
     # Find the magnitude
     import math
+
     mag = 10 ** math.floor(math.log10(rough_step))
     residual = rough_step / mag  # 1.0 <= residual < 10.0
 
@@ -196,8 +228,13 @@ def _nice_y_ticks(raw_max: float, target_ticks: int = 5) -> list[float]:
 def render_panel(
     total_series: list[tuple[float, float]],
     pid_series: dict[str, list[tuple[float, float]]],
-    x_offset: float, y_offset: float, width: float, height: float,
-    total_color: str, y_label: str, y_unit: str,
+    x_offset: float,
+    y_offset: float,
+    width: float,
+    height: float,
+    total_color: str,
+    y_label: str,
+    y_unit: str,
 ) -> str:
     if not total_series:
         return ""
@@ -331,7 +368,9 @@ def main() -> int:
     parser.add_argument("input_csv")
     parser.add_argument("output_svg")
     parser.add_argument("--title", default="Performance Metrics")
-    parser.add_argument("--subtitle", default="", help="Scenario description shown below the title")
+    parser.add_argument(
+        "--subtitle", default="", help="Scenario description shown below the title"
+    )
     args = parser.parse_args()
 
     rows = read_csv(args.input_csv)
@@ -395,24 +434,33 @@ def main() -> int:
         f'<rect width="{width}" height="{total_height}" fill="white"/>',
         *header_parts,
         render_panel(
-            rss_total, rss_per_pid,
-            0, title_height, width, panel_height,
-            TOTAL_RSS_COLOR, "RSS", "MiB",
+            rss_total,
+            rss_per_pid,
+            0,
+            title_height,
+            width,
+            panel_height,
+            TOTAL_RSS_COLOR,
+            "RSS",
+            "MiB",
         ),
         render_panel(
-            cpu_total, cpu_per_pid,
-            0, title_height + panel_height + gap, width, panel_height,
-            TOTAL_CPU_COLOR, "CPU", "%",
+            cpu_total,
+            cpu_per_pid,
+            0,
+            title_height + panel_height + gap,
+            width,
+            panel_height,
+            TOTAL_CPU_COLOR,
+            "CPU",
+            "%",
         ),
         "</svg>",
     ]
 
     svg_content = "\n".join(parts)
     Path(args.output_svg).write_text(svg_content, encoding="utf-8")
-    print(
-        f"  SVG: {args.output_svg} "
-        f"({len(rss_total)} timestamps, {n_pids} pid(s))"
-    )
+    print(f"  SVG: {args.output_svg} ({len(rss_total)} timestamps, {n_pids} pid(s))")
     return 0
 
 

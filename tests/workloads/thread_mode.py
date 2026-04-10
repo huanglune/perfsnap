@@ -1,4 +1,5 @@
 """4 threads: each allocates 20 MiB and burns CPU."""
+
 import threading
 import time
 

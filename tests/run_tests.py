@@ -9,6 +9,7 @@ Usage:
     python3 tests/run_tests.py                # run all tests
     python3 tests/run_tests.py single_proc    # run one test by name
 """
+
 import csv
 import os
 import subprocess
@@ -44,8 +45,9 @@ def read_csv_rows(path: Path) -> list[dict]:
         return list(csv.DictReader(f))
 
 
-def run_collector(name: str, workload_args: list[str],
-                  env_vars: dict[str, str] | None = None) -> Path:
+def run_collector(
+    name: str, workload_args: list[str], env_vars: dict[str, str] | None = None
+) -> Path:
     """Run collect_pidstat.sh with a workload and return CSV path."""
     env = os.environ.copy()
     if env_vars:
@@ -59,10 +61,8 @@ def run_collector(name: str, workload_args: list[str],
     return OUTPUT / f"{name}.csv"
 
 
-def run_plotter(csv_path: Path, svg_path: Path, title: str,
-                subtitle: str = ""):
-    cmd = [sys.executable, str(PLOTTER), str(csv_path), str(svg_path),
-           "--title", title]
+def run_plotter(csv_path: Path, svg_path: Path, title: str, subtitle: str = ""):
+    cmd = [sys.executable, str(PLOTTER), str(csv_path), str(svg_path), "--title", title]
     if subtitle:
         cmd += ["--subtitle", subtitle]
     subprocess.run(cmd, check=True, capture_output=True, text=True)
@@ -86,8 +86,12 @@ def test_single_proc():
     check("RSS drops at end", rss_values[-1] < max(rss_values) * 0.5)
 
     svg = EXAMPLES / "single_proc.svg"
-    run_plotter(csv_path, svg, "Single Process (Memory Ramp)",
-                "Allocates 10 MiB/s for 10s, then frees everything")
+    run_plotter(
+        csv_path,
+        svg,
+        "Single Process (Memory Ramp)",
+        "Allocates 10 MiB/s for 10s, then frees everything",
+    )
     check("SVG generated", svg.exists() and svg.stat().st_size > 100)
 
 
@@ -103,8 +107,12 @@ def test_multi_proc():
     check(f"captured multiple PIDs (got {len(pids)})", len(pids) >= 3)
 
     svg = EXAMPLES / "multi_proc.svg"
-    run_plotter(csv_path, svg, "Multi-Process Tree",
-                "Parent spawns 3 children (staggered), each ~30 MiB RSS + CPU burn")
+    run_plotter(
+        csv_path,
+        svg,
+        "Multi-Process Tree",
+        "Parent spawns 3 children (staggered), each ~30 MiB RSS + CPU burn",
+    )
     svg_text = svg.read_text()
     check("SVG has per-PID legend", "pid " in svg_text)
     check("SVG title says 'total'", "total" in svg_text)
@@ -129,8 +137,12 @@ def test_thread_mode():
         check(f"RSS > 50 MiB (got {max(rss_values):.1f})", max(rss_values) > 50)
 
     svg = EXAMPLES / "thread_mode.svg"
-    run_plotter(csv_path, svg, "Thread-Level Mode",
-                "4 threads, each 20 MiB + CPU burn (GIL limits parallelism)")
+    run_plotter(
+        csv_path,
+        svg,
+        "Thread-Level Mode",
+        "4 threads, each 20 MiB + CPU burn (GIL limits parallelism)",
+    )
     check("SVG generated", svg.exists() and svg.stat().st_size > 100)
 
 
@@ -147,6 +159,7 @@ def test_cpu_multicore():
 
     # Aggregate CPU per timestamp
     from collections import defaultdict
+
     ts_cpu: dict[str, float] = defaultdict(float)
     for r in rows:
         ts_cpu[r["timestamp_s"]] += float(r["cpu_pct"])
@@ -154,8 +167,12 @@ def test_cpu_multicore():
     check(f"peak total CPU > 300% (got {peak_total_cpu:.0f}%)", peak_total_cpu > 300)
 
     svg = EXAMPLES / "cpu_multicore.svg"
-    run_plotter(csv_path, svg, "Multi-Core CPU (4 Processes)",
-                "4 CPU-bound processes, each pinning ~100% of one core for 8s")
+    run_plotter(
+        csv_path,
+        svg,
+        "Multi-Core CPU (4 Processes)",
+        "4 CPU-bound processes, each pinning ~100% of one core for 8s",
+    )
     check("SVG generated", svg.exists())
 
 
@@ -171,6 +188,7 @@ def test_cpu_48core():
     check(f"captured many PIDs (got {len(pids)})", len(pids) >= 40)
 
     from collections import defaultdict
+
     ts_cpu: dict[str, float] = defaultdict(float)
     for r in rows:
         ts_cpu[r["timestamp_s"]] += float(r["cpu_pct"])
@@ -178,8 +196,12 @@ def test_cpu_48core():
     check(f"peak total CPU > 4000% (got {peak_total_cpu:.0f}%)", peak_total_cpu > 4000)
 
     svg = EXAMPLES / "cpu_48core.svg"
-    run_plotter(csv_path, svg, "48-Core CPU",
-                "48 CPU-bound processes, each pinning ~100% of one core for 8s")
+    run_plotter(
+        csv_path,
+        svg,
+        "48-Core CPU",
+        "48 CPU-bound processes, each pinning ~100% of one core for 8s",
+    )
     svg_text = svg.read_text()
     check("SVG generated", svg.exists())
     check("no per-PID legend (too many PIDs)", "pid " not in svg_text)
@@ -203,8 +225,12 @@ def test_interval_2s():
         check(f"timestamp gap ~2s (got {gap:.0f}s)", 1.5 <= gap <= 3.0)
 
     svg = EXAMPLES / "interval_2s.svg"
-    run_plotter(csv_path, svg, "Custom Interval (2s)",
-                "Same single-process workload, sampled every 2s instead of 1s")
+    run_plotter(
+        csv_path,
+        svg,
+        "Custom Interval (2s)",
+        "Same single-process workload, sampled every 2s instead of 1s",
+    )
     check("SVG generated", svg.exists())
 
 
@@ -214,7 +240,8 @@ def test_sim_long_duration():
     csv_path = OUTPUT / "sim_2h.csv"
     subprocess.run(
         [sys.executable, str(WORKLOADS / "sim_long_duration.py"), str(csv_path)],
-        check=True, capture_output=True,
+        check=True,
+        capture_output=True,
     )
     rows = read_csv_rows(csv_path)
     check(f"has 1440 samples (got {len(rows)})", len(rows) == 1440)
@@ -223,8 +250,12 @@ def test_sim_long_duration():
     check(f"peak RSS ~2048 MiB (got {max(rss_values):.0f})", max(rss_values) > 2000)
 
     svg = EXAMPLES / "sim_2h.svg"
-    run_plotter(csv_path, svg, "Simulated 2h Build",
-                "Synthetic: RSS ramps during compile, plateaus, drops at cleanup. CPU ~350% multi-core.")
+    run_plotter(
+        csv_path,
+        svg,
+        "Simulated 2h Build",
+        "Synthetic: RSS ramps during compile, plateaus, drops at cleanup. CPU ~350% multi-core.",
+    )
     svg_text = svg.read_text()
     check("X-axis uses minute labels", "15m" in svg_text)
     check("no raw seconds in labels", "900s" not in svg_text)
