@@ -13,9 +13,12 @@ else
 fi
 ```
 
-## Step 2: Create the skills symlink
+## Step 2: Create the skills symlinks
 
 ```bash
+mkdir -p ~/.codex/skills
+ln -sf ~/.codex/perfsnap/perfsnap ~/.codex/skills/perfsnap
+
 mkdir -p ~/.agents/skills
 ln -sf ~/.codex/perfsnap/perfsnap ~/.agents/skills/perfsnap
 ```
@@ -23,7 +26,7 @@ ln -sf ~/.codex/perfsnap/perfsnap ~/.agents/skills/perfsnap
 ## Step 3: Ensure scripts are executable
 
 ```bash
-chmod +x ~/.agents/skills/perfsnap/scripts/collect_pidstat.sh
+chmod +x ~/.codex/perfsnap/perfsnap/scripts/collect_pidstat.sh
 ```
 
 ## Step 4: Verify prerequisites
@@ -37,12 +40,14 @@ command -v python3 >/dev/null 2>&1 && echo "OK: python3" || echo "MISSING: insta
 ## Step 5: Verify
 
 ```bash
-test -f ~/.agents/skills/perfsnap/SKILL.md && echo "OK: skill installed" || echo "FAIL: SKILL.md not found"
+test -f ~/.codex/skills/perfsnap/SKILL.md && echo "OK: codex skill installed" || echo "FAIL: ~/.codex/skills symlink missing"
+test -f ~/.agents/skills/perfsnap/SKILL.md && echo "OK: agents skill installed" || echo "FAIL: ~/.agents/skills symlink missing"
 ```
 
 ## Uninstall
 
 ```bash
+rm -f ~/.codex/skills/perfsnap
 rm -f ~/.agents/skills/perfsnap
 rm -rf ~/.codex/perfsnap
 ```
