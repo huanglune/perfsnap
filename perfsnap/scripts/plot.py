@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Render a two-panel SVG chart (RSS MiB + CPU %) from a pidstat CSV file.
+"""Render a two-panel SVG chart (RSS MiB + CPU %) from a perfsnap CSV file.
 
 Handles multi-process and multi-thread data by:
 - Aggregating RSS and CPU per timestamp across all PIDs (total line)
 - Drawing per-PID breakdown lines when multiple PIDs are present
 
 Usage:
-    python3 plot_pidstat_svg.py input.csv output.svg [--title "My Build"]
+    python3 plot.py input.csv output.svg [--title "My Build"]
 """
 
 import argparse
@@ -358,7 +358,7 @@ def render_no_data(title: str) -> str:
         f'  <rect width="100%" height="100%" fill="white"/>\n'
         f'  <text x="40" y="60" font-size="24" fill="#111827">{title}</text>\n'
         f'  <text x="40" y="100" font-size="14" fill="#6b7280">'
-        f"No pidstat samples found.</text>\n"
+        f"No samples collected.</text>\n"
         f"</svg>"
     )
 

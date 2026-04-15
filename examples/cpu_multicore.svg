@@ -2,7 +2,7 @@
 <rect width="900" height="608" fill="white"/>
 <text x="450.0" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#222">Multi-Core CPU (4 Processes)</text>
 <text x="450.0" y="42" text-anchor="middle" font-size="11" fill="#666" font-style="italic">4 CPU-bound processes, each pinning ~100% of one core for 8s</text>
-<text x="450.0" y="60" text-anchor="middle" font-size="11" fill="#888">samples=40  pids=5  peak_rss=41.3 MiB  avg_rss=37.0 MiB  peak_cpu=401.0%  avg_cpu=325.0%</text>
+<text x="450.0" y="60" text-anchor="middle" font-size="11" fill="#888">samples=36  pids=5  peak_rss=41.0 MiB  avg_rss=33.5 MiB  peak_cpu=401.2%  avg_cpu=300.1%</text>
 <rect x="70" y="98" width="810" height="185" fill="#fafafa" stroke="#ddd"/>
 <line x1="70" y1="283.0" x2="880" y2="283.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="287.0" text-anchor="end" font-size="11" fill="#666">0</text>
@@ -17,32 +17,28 @@
 <line x1="70" y1="98.0" x2="880" y2="98.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="102.0" text-anchor="end" font-size="11" fill="#666">50</text>
 <text x="70.0" y="303" text-anchor="middle" font-size="11" fill="#666">0s</text>
-<text x="171.2" y="303" text-anchor="middle" font-size="11" fill="#666">1s</text>
-<text x="272.5" y="303" text-anchor="middle" font-size="11" fill="#666">2s</text>
-<text x="373.8" y="303" text-anchor="middle" font-size="11" fill="#666">3s</text>
-<text x="475.0" y="303" text-anchor="middle" font-size="11" fill="#666">4s</text>
-<text x="576.2" y="303" text-anchor="middle" font-size="11" fill="#666">5s</text>
-<text x="677.5" y="303" text-anchor="middle" font-size="11" fill="#666">6s</text>
-<text x="778.8" y="303" text-anchor="middle" font-size="11" fill="#666">7s</text>
-<text x="880.0" y="303" text-anchor="middle" font-size="11" fill="#666">8s</text>
-<polyline points="70.0,244.2 171.2,244.2 272.5,244.2 373.8,244.2 475.0,244.2 576.2,244.2 677.5,244.2 778.8,244.2 880.0,244.2" fill="none" stroke="#3b82f6" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="70.0,254.5 171.2,254.3 272.5,254.3 373.8,254.3 475.0,254.3 576.2,254.3 677.5,254.3" fill="none" stroke="#ef4444" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="70.0,254.5 171.2,254.5 272.5,254.5 373.8,254.5 475.0,254.5 576.2,254.5 677.5,254.5 778.8,254.5" fill="none" stroke="#22c55e" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="70.0,254.5 171.2,254.5 272.5,254.5 373.8,254.5 475.0,254.5 576.2,254.5 677.5,254.5 778.8,254.5" fill="none" stroke="#f59e0b" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="171.2,254.5 272.5,254.5 373.8,254.5 475.0,254.5 576.2,254.5 677.5,254.5 778.8,254.5 880.0,254.5" fill="none" stroke="#8b5cf6" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polygon points="70.0,283.0 70.0,158.9 171.2,130.2 272.5,130.2 373.8,130.2 475.0,130.2 576.2,130.2 677.5,130.2 778.8,158.9 880.0,215.8 880.0,283.0" fill="#1d4ed8" opacity="0.12"/>
-<polyline points="70.0,158.9 171.2,130.2 272.5,130.2 373.8,130.2 475.0,130.2 576.2,130.2 677.5,130.2 778.8,158.9 880.0,215.8" fill="none" stroke="#1d4ed8" stroke-width="2.0"/>
+<text x="272.1" y="303" text-anchor="middle" font-size="11" fill="#666">2s</text>
+<text x="474.1" y="303" text-anchor="middle" font-size="11" fill="#666">4s</text>
+<text x="676.2" y="303" text-anchor="middle" font-size="11" fill="#666">6s</text>
+<text x="878.3" y="303" text-anchor="middle" font-size="11" fill="#666">8s</text>
+<polyline points="70.0,242.3 171.2,242.3 272.6,242.3 373.8,242.3 475.1,242.3 576.3,242.3 677.5,242.3 778.9,242.3 880.0,242.3" fill="none" stroke="#3b82f6" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="70.0,255.4 171.2,254.9 272.6,254.9 373.8,254.9 475.1,254.9 576.3,254.9 677.5,254.9" fill="none" stroke="#ef4444" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="171.2,255.4 272.6,255.4 373.8,255.4 475.1,255.4 576.3,255.4 677.5,255.4 778.9,255.4" fill="none" stroke="#22c55e" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="272.6,255.4 373.8,255.4 475.1,255.4 576.3,255.4 677.5,255.4 778.9,255.4" fill="none" stroke="#f59e0b" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="272.6,255.4 373.8,255.4 475.1,255.4 576.3,255.4 677.5,255.4 778.9,255.4 880.0,255.4" fill="none" stroke="#8b5cf6" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polygon points="70.0,283.0 70.0,214.7 171.2,186.5 272.6,131.3 373.8,131.3 475.1,131.3 576.3,131.3 677.5,131.3 778.9,159.4 880.0,214.7 880.0,283.0" fill="#1d4ed8" opacity="0.12"/>
+<polyline points="70.0,214.7 171.2,186.5 272.6,131.3 373.8,131.3 475.1,131.3 576.3,131.3 677.5,131.3 778.9,159.4 880.0,214.7" fill="none" stroke="#1d4ed8" stroke-width="2.0"/>
 <text x="475.0" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">RSS total (5 pids) (MiB)</text>
 <line x1="830" y1="112" x2="850" y2="112" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="116" font-size="9" fill="#666">pid 3366370</text>
+<text x="854" y="116" font-size="9" fill="#666">pid 1036285</text>
 <line x1="830" y1="126" x2="850" y2="126" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="130" font-size="9" fill="#666">pid 3366375</text>
+<text x="854" y="130" font-size="9" fill="#666">pid 1036304</text>
 <line x1="830" y1="140" x2="850" y2="140" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="144" font-size="9" fill="#666">pid 3366397</text>
+<text x="854" y="144" font-size="9" fill="#666">pid 1036516</text>
 <line x1="830" y1="154" x2="850" y2="154" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="158" font-size="9" fill="#666">pid 3366444</text>
+<text x="854" y="158" font-size="9" fill="#666">pid 1036699</text>
 <line x1="830" y1="168" x2="850" y2="168" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="172" font-size="9" fill="#666">pid 3366479</text>
+<text x="854" y="172" font-size="9" fill="#666">pid 1036756</text>
 <rect x="70" y="368" width="810" height="185" fill="#fafafa" stroke="#ddd"/>
 <line x1="70" y1="553.0" x2="880" y2="553.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="557.0" text-anchor="end" font-size="11" fill="#666">0</text>
@@ -57,30 +53,26 @@
 <line x1="70" y1="368.0" x2="880" y2="368.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="372.0" text-anchor="end" font-size="11" fill="#666">500</text>
 <text x="70.0" y="573" text-anchor="middle" font-size="11" fill="#666">0s</text>
-<text x="171.2" y="573" text-anchor="middle" font-size="11" fill="#666">1s</text>
-<text x="272.5" y="573" text-anchor="middle" font-size="11" fill="#666">2s</text>
-<text x="373.8" y="573" text-anchor="middle" font-size="11" fill="#666">3s</text>
-<text x="475.0" y="573" text-anchor="middle" font-size="11" fill="#666">4s</text>
-<text x="576.2" y="573" text-anchor="middle" font-size="11" fill="#666">5s</text>
-<text x="677.5" y="573" text-anchor="middle" font-size="11" fill="#666">6s</text>
-<text x="778.8" y="573" text-anchor="middle" font-size="11" fill="#666">7s</text>
-<text x="880.0" y="573" text-anchor="middle" font-size="11" fill="#666">8s</text>
-<polyline points="70.0,553.0 171.2,552.6 272.5,553.0 373.8,553.0 475.0,553.0 576.2,553.0 677.5,553.0 778.8,553.0 880.0,553.0" fill="none" stroke="#3b82f6" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="70.0,516.0 171.2,516.0 272.5,516.0 373.8,516.0 475.0,516.0 576.2,516.0 677.5,516.0" fill="none" stroke="#ef4444" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="70.0,532.3 171.2,516.0 272.5,516.0 373.8,516.0 475.0,516.0 576.2,516.0 677.5,516.0 778.8,516.0" fill="none" stroke="#22c55e" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="70.0,549.5 171.2,516.0 272.5,516.0 373.8,516.0 475.0,516.0 576.2,516.0 677.5,516.0 778.8,516.0" fill="none" stroke="#f59e0b" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polyline points="171.2,531.2 272.5,516.0 373.8,515.6 475.0,516.0 576.2,516.0 677.5,516.4 778.8,516.0 880.0,516.0" fill="none" stroke="#8b5cf6" stroke-width="1.0" stroke-dasharray="4,3"/>
-<polygon points="70.0,553.0 70.0,491.8 171.2,419.8 272.5,405.0 373.8,404.6 475.0,405.0 576.2,405.0 677.5,405.4 778.8,442.0 880.0,516.0 880.0,553.0" fill="#b91c1c" opacity="0.12"/>
-<polyline points="70.0,491.8 171.2,419.8 272.5,405.0 373.8,404.6 475.0,405.0 576.2,405.0 677.5,405.4 778.8,442.0 880.0,516.0" fill="none" stroke="#b91c1c" stroke-width="2.0"/>
+<text x="272.1" y="573" text-anchor="middle" font-size="11" fill="#666">2s</text>
+<text x="474.1" y="573" text-anchor="middle" font-size="11" fill="#666">4s</text>
+<text x="676.2" y="573" text-anchor="middle" font-size="11" fill="#666">6s</text>
+<text x="878.3" y="573" text-anchor="middle" font-size="11" fill="#666">8s</text>
+<polyline points="70.0,553.0 171.2,552.6 272.6,553.0 373.8,553.0 475.1,553.0 576.3,553.0 677.5,553.0 778.9,553.0 880.0,553.0" fill="none" stroke="#3b82f6" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="70.0,516.4 171.2,515.7 272.6,516.1 373.8,516.1 475.1,515.7 576.3,516.1 677.5,516.1" fill="none" stroke="#ef4444" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="171.2,515.7 272.6,516.1 373.8,516.1 475.1,515.7 576.3,516.1 677.5,516.1 778.9,516.1" fill="none" stroke="#22c55e" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="272.6,515.7 373.8,516.1 475.1,516.1 576.3,516.1 677.5,516.1 778.9,516.1" fill="none" stroke="#f59e0b" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polyline points="272.6,515.7 373.8,516.1 475.1,516.1 576.3,516.1 677.5,515.7 778.9,516.1 880.0,516.1" fill="none" stroke="#8b5cf6" stroke-width="1.0" stroke-dasharray="4,3"/>
+<polygon points="70.0,553.0 70.0,516.4 171.2,478.0 272.6,404.6 373.8,405.3 475.1,404.6 576.3,405.3 677.5,404.9 778.9,442.2 880.0,516.1 880.0,553.0" fill="#b91c1c" opacity="0.12"/>
+<polyline points="70.0,516.4 171.2,478.0 272.6,404.6 373.8,405.3 475.1,404.6 576.3,405.3 677.5,404.9 778.9,442.2 880.0,516.1" fill="none" stroke="#b91c1c" stroke-width="2.0"/>
 <text x="475.0" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">CPU total (5 pids) (%)</text>
 <line x1="830" y1="382" x2="850" y2="382" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="386" font-size="9" fill="#666">pid 3366370</text>
+<text x="854" y="386" font-size="9" fill="#666">pid 1036285</text>
 <line x1="830" y1="396" x2="850" y2="396" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="400" font-size="9" fill="#666">pid 3366375</text>
+<text x="854" y="400" font-size="9" fill="#666">pid 1036304</text>
 <line x1="830" y1="410" x2="850" y2="410" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="414" font-size="9" fill="#666">pid 3366397</text>
+<text x="854" y="414" font-size="9" fill="#666">pid 1036516</text>
 <line x1="830" y1="424" x2="850" y2="424" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="428" font-size="9" fill="#666">pid 3366444</text>
+<text x="854" y="428" font-size="9" fill="#666">pid 1036699</text>
 <line x1="830" y1="438" x2="850" y2="438" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,3"/>
-<text x="854" y="442" font-size="9" fill="#666">pid 3366479</text>
+<text x="854" y="442" font-size="9" fill="#666">pid 1036756</text>
 </svg>

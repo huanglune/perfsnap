@@ -2,7 +2,7 @@
 <rect width="900" height="608" fill="white"/>
 <text x="450.0" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#222">Thread-Level Mode</text>
 <text x="450.0" y="42" text-anchor="middle" font-size="11" fill="#666" font-style="italic">4 threads, each 20 MiB + CPU burn (GIL limits parallelism)</text>
-<text x="450.0" y="60" text-anchor="middle" font-size="11" fill="#888">samples=18  peak_rss=88.2 MiB  avg_rss=88.2 MiB  peak_cpu=36.0%  avg_cpu=31.5%</text>
+<text x="450.0" y="60" text-anchor="middle" font-size="11" fill="#888">samples=45  peak_rss=88.5 MiB  avg_rss=88.5 MiB  peak_cpu=36.9%  avg_cpu=31.2%</text>
 <rect x="70" y="98" width="810" height="185" fill="#fafafa" stroke="#ddd"/>
 <line x1="70" y1="283.0" x2="880" y2="283.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="287.0" text-anchor="end" font-size="11" fill="#666">0</text>
@@ -17,12 +17,15 @@
 <line x1="70" y1="98.0" x2="880" y2="98.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="102.0" text-anchor="end" font-size="11" fill="#666">100</text>
 <text x="70.0" y="303" text-anchor="middle" font-size="11" fill="#666">0s</text>
-<text x="272.5" y="303" text-anchor="middle" font-size="11" fill="#666">1s</text>
-<text x="475.0" y="303" text-anchor="middle" font-size="11" fill="#666">2s</text>
-<text x="677.5" y="303" text-anchor="middle" font-size="11" fill="#666">3s</text>
-<text x="880.0" y="303" text-anchor="middle" font-size="11" fill="#666">4s</text>
-<polygon points="70.0,283.0 70.0,119.9 475.0,119.9 880.0,119.9 880.0,283.0" fill="#1d4ed8" opacity="0.12"/>
-<polyline points="70.0,119.9 475.0,119.9 880.0,119.9" fill="none" stroke="#1d4ed8" stroke-width="1.5"/>
+<text x="185.5" y="303" text-anchor="middle" font-size="11" fill="#666">1s</text>
+<text x="300.9" y="303" text-anchor="middle" font-size="11" fill="#666">2s</text>
+<text x="416.4" y="303" text-anchor="middle" font-size="11" fill="#666">3s</text>
+<text x="531.9" y="303" text-anchor="middle" font-size="11" fill="#666">4s</text>
+<text x="647.3" y="303" text-anchor="middle" font-size="11" fill="#666">5s</text>
+<text x="762.8" y="303" text-anchor="middle" font-size="11" fill="#666">6s</text>
+<text x="878.3" y="303" text-anchor="middle" font-size="11" fill="#666">7s</text>
+<polygon points="70.0,283.0 70.0,119.3 185.7,119.3 301.5,119.3 417.2,119.3 532.8,119.3 648.6,119.3 764.2,119.3 880.0,119.3 880.0,283.0" fill="#1d4ed8" opacity="0.12"/>
+<polyline points="70.0,119.3 185.7,119.3 301.5,119.3 417.2,119.3 532.8,119.3 648.6,119.3 764.2,119.3 880.0,119.3" fill="none" stroke="#1d4ed8" stroke-width="1.5"/>
 <text x="475.0" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">RSS (MiB)</text>
 <rect x="70" y="368" width="810" height="185" fill="#fafafa" stroke="#ddd"/>
 <line x1="70" y1="553.0" x2="880" y2="553.0" stroke="#eee" stroke-width="0.5"/>
@@ -44,11 +47,14 @@
 <line x1="70" y1="368.0" x2="880" y2="368.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="372.0" text-anchor="end" font-size="11" fill="#666">40.0</text>
 <text x="70.0" y="573" text-anchor="middle" font-size="11" fill="#666">0s</text>
-<text x="272.5" y="573" text-anchor="middle" font-size="11" fill="#666">1s</text>
-<text x="475.0" y="573" text-anchor="middle" font-size="11" fill="#666">2s</text>
-<text x="677.5" y="573" text-anchor="middle" font-size="11" fill="#666">3s</text>
-<text x="880.0" y="573" text-anchor="middle" font-size="11" fill="#666">4s</text>
-<polygon points="70.0,553.0 70.0,406.9 475.0,428.1 880.0,386.5 880.0,553.0" fill="#b91c1c" opacity="0.12"/>
-<polyline points="70.0,406.9 475.0,428.1 880.0,386.5" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
+<text x="185.5" y="573" text-anchor="middle" font-size="11" fill="#666">1s</text>
+<text x="300.9" y="573" text-anchor="middle" font-size="11" fill="#666">2s</text>
+<text x="416.4" y="573" text-anchor="middle" font-size="11" fill="#666">3s</text>
+<text x="531.9" y="573" text-anchor="middle" font-size="11" fill="#666">4s</text>
+<text x="647.3" y="573" text-anchor="middle" font-size="11" fill="#666">5s</text>
+<text x="762.8" y="573" text-anchor="middle" font-size="11" fill="#666">6s</text>
+<text x="878.3" y="573" text-anchor="middle" font-size="11" fill="#666">7s</text>
+<polygon points="70.0,553.0 70.0,382.2 185.7,386.8 301.5,428.4 417.2,433.0 532.8,386.8 648.6,414.6 764.2,446.8 880.0,391.5 880.0,553.0" fill="#b91c1c" opacity="0.12"/>
+<polyline points="70.0,382.2 185.7,386.8 301.5,428.4 417.2,433.0 532.8,386.8 648.6,414.6 764.2,446.8 880.0,391.5" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
 <text x="475.0" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">CPU (%)</text>
 </svg>

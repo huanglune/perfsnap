@@ -2,7 +2,7 @@
 <rect width="900" height="608" fill="white"/>
 <text x="450.0" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#222">48-Core CPU</text>
 <text x="450.0" y="42" text-anchor="middle" font-size="11" fill="#666" font-style="italic">48 CPU-bound processes, each pinning ~100% of one core for 8s</text>
-<text x="450.0" y="60" text-anchor="middle" font-size="11" fill="#888">samples=343  pids=49  peak_rss=378.5 MiB  avg_rss=378.0 MiB  peak_cpu=4837.2%  avg_cpu=4804.2%</text>
+<text x="450.0" y="60" text-anchor="middle" font-size="11" fill="#888">samples=301  pids=49  peak_rss=375.5 MiB  avg_rss=288.9 MiB  peak_cpu=4809.5%  avg_cpu=3661.6%</text>
 <rect x="70" y="98" width="810" height="185" fill="#fafafa" stroke="#ddd"/>
 <line x1="70" y1="283.0" x2="880" y2="283.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="287.0" text-anchor="end" font-size="11" fill="#666">0</text>
@@ -15,14 +15,15 @@
 <line x1="70" y1="98.0" x2="880" y2="98.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="102.0" text-anchor="end" font-size="11" fill="#666">400</text>
 <text x="70.0" y="303" text-anchor="middle" font-size="11" fill="#666">0s</text>
-<text x="205.0" y="303" text-anchor="middle" font-size="11" fill="#666">1s</text>
-<text x="340.0" y="303" text-anchor="middle" font-size="11" fill="#666">2s</text>
-<text x="475.0" y="303" text-anchor="middle" font-size="11" fill="#666">3s</text>
-<text x="610.0" y="303" text-anchor="middle" font-size="11" fill="#666">4s</text>
-<text x="745.0" y="303" text-anchor="middle" font-size="11" fill="#666">5s</text>
-<text x="880.0" y="303" text-anchor="middle" font-size="11" fill="#666">6s</text>
-<polygon points="70.0,283.0 70.0,108.4 205.0,108.3 340.0,108.2 475.0,108.2 610.0,108.0 745.0,108.0 880.0,108.0 880.0,283.0" fill="#1d4ed8" opacity="0.12"/>
-<polyline points="70.0,108.4 205.0,108.3 340.0,108.2 475.0,108.2 610.0,108.0 745.0,108.0 880.0,108.0" fill="none" stroke="#1d4ed8" stroke-width="2.0"/>
+<text x="185.2" y="303" text-anchor="middle" font-size="11" fill="#666">1s</text>
+<text x="300.4" y="303" text-anchor="middle" font-size="11" fill="#666">2s</text>
+<text x="415.6" y="303" text-anchor="middle" font-size="11" fill="#666">3s</text>
+<text x="530.8" y="303" text-anchor="middle" font-size="11" fill="#666">4s</text>
+<text x="646.0" y="303" text-anchor="middle" font-size="11" fill="#666">5s</text>
+<text x="761.2" y="303" text-anchor="middle" font-size="11" fill="#666">6s</text>
+<text x="876.4" y="303" text-anchor="middle" font-size="11" fill="#666">7s</text>
+<polygon points="70.0,283.0 70.0,260.5 185.5,109.6 301.3,109.6 417.1,109.4 532.8,109.4 648.7,109.4 764.5,109.3 880.0,278.0 880.0,283.0" fill="#1d4ed8" opacity="0.12"/>
+<polyline points="70.0,260.5 185.5,109.6 301.3,109.6 417.1,109.4 532.8,109.4 648.7,109.4 764.5,109.3 880.0,278.0" fill="none" stroke="#1d4ed8" stroke-width="2.0"/>
 <text x="475.0" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">RSS total (49 pids) (MiB)</text>
 <rect x="70" y="368" width="810" height="185" fill="#fafafa" stroke="#ddd"/>
 <line x1="70" y1="553.0" x2="880" y2="553.0" stroke="#eee" stroke-width="0.5"/>
@@ -38,13 +39,14 @@
 <line x1="70" y1="368.0" x2="880" y2="368.0" stroke="#eee" stroke-width="0.5"/>
 <text x="62" y="372.0" text-anchor="end" font-size="11" fill="#666">5000</text>
 <text x="70.0" y="573" text-anchor="middle" font-size="11" fill="#666">0s</text>
-<text x="205.0" y="573" text-anchor="middle" font-size="11" fill="#666">1s</text>
-<text x="340.0" y="573" text-anchor="middle" font-size="11" fill="#666">2s</text>
-<text x="475.0" y="573" text-anchor="middle" font-size="11" fill="#666">3s</text>
-<text x="610.0" y="573" text-anchor="middle" font-size="11" fill="#666">4s</text>
-<text x="745.0" y="573" text-anchor="middle" font-size="11" fill="#666">5s</text>
-<text x="880.0" y="573" text-anchor="middle" font-size="11" fill="#666">6s</text>
-<polygon points="70.0,553.0 70.0,374.0 205.0,374.7 340.0,375.0 475.0,375.7 610.0,375.3 745.0,375.6 880.0,376.5 880.0,553.0" fill="#b91c1c" opacity="0.12"/>
-<polyline points="70.0,374.0 205.0,374.7 340.0,375.0 475.0,375.7 610.0,375.3 745.0,375.6 880.0,376.5" fill="none" stroke="#b91c1c" stroke-width="2.0"/>
+<text x="185.2" y="573" text-anchor="middle" font-size="11" fill="#666">1s</text>
+<text x="300.4" y="573" text-anchor="middle" font-size="11" fill="#666">2s</text>
+<text x="415.6" y="573" text-anchor="middle" font-size="11" fill="#666">3s</text>
+<text x="530.8" y="573" text-anchor="middle" font-size="11" fill="#666">4s</text>
+<text x="646.0" y="573" text-anchor="middle" font-size="11" fill="#666">5s</text>
+<text x="761.2" y="573" text-anchor="middle" font-size="11" fill="#666">6s</text>
+<text x="876.4" y="573" text-anchor="middle" font-size="11" fill="#666">7s</text>
+<polygon points="70.0,553.0 70.0,534.6 185.5,375.4 301.3,375.6 417.1,375.4 532.8,375.7 648.7,375.0 764.5,375.5 880.0,553.0 880.0,553.0" fill="#b91c1c" opacity="0.12"/>
+<polyline points="70.0,534.6 185.5,375.4 301.3,375.6 417.1,375.4 532.8,375.7 648.7,375.0 764.5,375.5 880.0,553.0" fill="none" stroke="#b91c1c" stroke-width="2.0"/>
 <text x="475.0" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">CPU total (49 pids) (%)</text>
 </svg>

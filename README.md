@@ -1,14 +1,14 @@
 # perfsnap
 
-A coding agent skill that collects RSS memory, CPU usage, and optional thread-level metrics for any local command using `pidstat`, then exports CSV and renders a two-panel SVG chart.
+A coding agent skill that collects RSS memory, CPU usage, and optional thread-level metrics for any local command by sampling `/proc` directly, then exports CSV and renders a two-panel SVG chart. Supports fractional (sub-second) sample intervals.
 
 ## What it does
 
 When you ask your agent to profile a command (e.g. "how much memory does this use?", "track performance while it runs"), this skill:
 
 1. Launches your command in the background
-2. Monitors the **entire process tree** (parent + all descendants) via pidstat
-3. Converts raw pidstat output to a clean CSV with PID/TID tracking
+2. Samples the **entire process tree** (parent + all descendants) by reading `/proc/<pid>/stat`
+3. Writes a clean CSV with PID/TID tracking
 4. Renders a two-panel SVG chart (RSS MiB + CPU %) with per-PID breakdown
 
 ## Installation
@@ -31,8 +31,8 @@ Fetch and follow instructions from https://raw.githubusercontent.com/huanglune/p
 
 ### Prerequisites
 
-- `pidstat` (from [sysstat](https://github.com/sysstat/sysstat)) — `sudo apt install sysstat` on Debian/Ubuntu
 - `python3` (no third-party packages required)
+- Linux kernel with `/proc/<pid>/task/<tid>/children` support (default on any modern distro)
 
 ## Examples
 
@@ -120,30 +120,32 @@ Once installed, just ask your agent to profile any command:
 
 ```bash
 # Basic usage
-./perfsnap/scripts/collect_pidstat.sh /tmp/perf my_run -- ./my_command --flag
+./perfsnap/scripts/collect.sh /tmp/perf my_run -- ./my_command --flag
+
+# Sub-second sample interval
+PERFSNAP_INTERVAL=0.1 ./perfsnap/scripts/collect.sh /tmp/perf my_run -- ./my_command
 
 # Thread-level collection
-PIDSTAT_THREAD=1 ./perfsnap/scripts/collect_pidstat.sh /tmp/perf my_run -- ./my_command
+PERFSNAP_THREAD=1 ./perfsnap/scripts/collect.sh /tmp/perf my_run -- ./my_command
 
-# Just convert + plot existing pidstat output
-python3 perfsnap/scripts/pidstat_to_csv.py input.pidstat output.csv
-python3 perfsnap/scripts/plot_pidstat_svg.py output.csv output.svg --title "My Run"
+# Attach the sampler directly to an already-running PID
+python3 perfsnap/scripts/sampler.py --root-pid 12345 --interval 0.5 --output out.csv
+python3 perfsnap/scripts/plot.py out.csv out.svg --title "My Run"
 ```
 
 ### Environment Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PIDSTAT_INTERVAL` | `1` | Sample interval in seconds |
-| `PIDSTAT_THREAD` | `0` | Set to `1` for thread-level collection |
-| `PIDSTAT_KEEP_RAW` | `0` | Set to `1` to keep the raw `.pidstat` and `.pids` files |
+| `PERFSNAP_INTERVAL` | `1` | Sample interval in seconds. Floats allowed; practical floor ~`0.05` (CPU% quantizes at the kernel clock tick, usually 10 ms). |
+| `PERFSNAP_THREAD` | `0` | Set to `1` for thread-level collection |
 
 ### Output Files
 
 | File | Contents |
 |------|----------|
 | `<prefix>.stdout.log` | Target command's stdout + stderr |
-| `<prefix>.csv` | Parsed pidstat samples (timestamps, CPU %, RSS, VSZ, tid) |
+| `<prefix>.csv` | Per-sample rows (timestamps, CPU %, RSS, VSZ, faults, tid if thread mode) |
 | `<prefix>.svg` | Two-panel chart: RSS (MiB) top, CPU (%) bottom |
 
 ## Testing
@@ -163,7 +165,7 @@ python3 tests/run_tests.py sim_long_duration
 
 Available tests: `single_proc`, `multi_proc`, `thread_mode`, `cpu_multicore`, `cpu_48core`, `interval_2s`, `sim_long_duration`
 
-Test workloads live in `tests/workloads/` — each is a standalone Python script that simulates a specific resource pattern. The test runner invokes them through `collect_pidstat.sh` (the real skill pipeline), so any change to the scripts is automatically covered.
+Test workloads live in `tests/workloads/` — each is a standalone Python script that simulates a specific resource pattern. The test runner invokes them through `collect.sh` (the real skill pipeline), so any change to the scripts is automatically covered.
 
 ## License
 

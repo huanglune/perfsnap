@@ -20,15 +20,14 @@ rm -rf "$TMP_DIR"
 
 ```bash
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-chmod +x "$CLAUDE_DIR/skills/perfsnap/scripts/collect_pidstat.sh"
+chmod +x "$CLAUDE_DIR/skills/perfsnap/scripts/collect.sh"
 ```
 
 ## Step 3: Verify prerequisites
 
 ```bash
-command -v pidstat >/dev/null 2>&1 && echo "OK: pidstat" || echo "MISSING: sudo apt install sysstat"
-command -v pgrep  >/dev/null 2>&1 && echo "OK: pgrep"  || echo "MISSING: sudo apt install procps"
 command -v python3 >/dev/null 2>&1 && echo "OK: python3" || echo "MISSING: install python3"
+test -r /proc/self/task/$$/children && echo "OK: /proc children interface" || echo "MISSING: kernel must expose /proc/<pid>/task/<tid>/children"
 ```
 
 ## Step 4: Verify

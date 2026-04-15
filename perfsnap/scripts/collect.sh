@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# Usage: collect_pidstat.sh <output-dir> <prefix> -- <command...>
+# Usage: collect.sh <output-dir> <prefix> -- <command...>
 #
-# Launches <command> in the background, monitors it and all its descendant
-# processes with pidstat, then generates CSV + SVG when it finishes.
+# Launches <command> in the background, samples its full process tree via
+# sampler.py (which reads /proc directly), then generates a two-panel SVG
+# from the CSV when the command exits.
 #
 # Environment variables:
-#   PIDSTAT_INTERVAL  — sample interval in seconds (default: 1)
-#   PIDSTAT_THREAD    — set to 1 for thread-level collection (-t flag)
-#   PIDSTAT_KEEP_RAW  — set to 1 to keep the raw .pidstat file
+#   PERFSNAP_INTERVAL  — sample interval in seconds, float allowed (default: 1)
+#                        Practical floor is ~0.05s; CPU% quantizes at the
+#                        kernel clock tick (usually 10ms).
+#   PERFSNAP_THREAD    — set to 1 for thread-level collection
 set -euo pipefail
 
 usage() {
@@ -35,38 +37,28 @@ if [[ $# -eq 0 ]]; then
   exit 1
 fi
 
-# Prerequisites
-if ! command -v pidstat >/dev/null 2>&1; then
-  echo "ERROR: pidstat not found; install sysstat first." >&2
-  exit 1
-fi
 if ! command -v python3 >/dev/null 2>&1; then
   echo "ERROR: python3 not found." >&2
   exit 1
 fi
 
+interval=${PERFSNAP_INTERVAL:-1}
+thread_flag=${PERFSNAP_THREAD:-0}
+
+# Validate interval as a positive float. Reject negatives, zero, non-numeric.
+if ! awk -v v="$interval" 'BEGIN { exit !(v+0 > 0 && v == v+0) }'; then
+  echo "ERROR: PERFSNAP_INTERVAL must be a positive number, got: $interval" >&2
+  exit 1
+fi
+
 mkdir -p "$output_dir"
-
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-interval=${PIDSTAT_INTERVAL:-1}
-thread_flag=${PIDSTAT_THREAD:-0}
-keep_raw=${PIDSTAT_KEEP_RAW:-0}
 
-pidstat_log="$output_dir/$prefix.pidstat"
 stdout_log="$output_dir/$prefix.stdout.log"
 csv_path="$output_dir/$prefix.csv"
 svg_path="$output_dir/$prefix.svg"
-pids_file="$output_dir/$prefix.pids"
 
-# Force epoch timestamps and English headers across all sysstat versions
-export LC_ALL=C
-
-pidstat_flags="-r -u -h"
-if [[ "$thread_flag" == "1" ]]; then
-  pidstat_flags="-t -r -u -h"
-fi
-
-echo "=== Collecting pidstat metrics ==="
+echo "=== Collecting perfsnap metrics ==="
 echo "  Command:  $*"
 echo "  Output:   $output_dir/$prefix.*"
 echo "  Interval: ${interval}s"
@@ -74,63 +66,37 @@ echo "  Thread:   $([[ $thread_flag == 1 ]] && echo yes || echo no)"
 
 start_ts=$(date +%s.%N)
 
-# Launch the target command in the background, capturing stdout+stderr
+# Launch the target command. Stdout+stderr go to a separate log so they
+# don't mix with sampler output.
 "$@" > "$stdout_log" 2>&1 &
 cmd_pid=$!
 echo "  PID:      $cmd_pid"
 
-# Sidecar: periodically collect the entire descendant process tree.
-# This runs alongside pidstat so we know which PIDs belong to our command.
-collect_tree() {
-  local parent=$1
-  echo "$parent"
-  local children
-  children=$(pgrep -P "$parent" 2>/dev/null) || true
-  for child in $children; do
-    collect_tree "$child"
-  done
-}
-(
-  while kill -0 "$cmd_pid" 2>/dev/null; do
-    collect_tree "$cmd_pid"
-    sleep "${interval}"
-  done
-  # Final sweep after command exits — catch short-lived children
-  collect_tree "$cmd_pid" 2>/dev/null || true
-) > "$pids_file" 2>/dev/null &
-tracker_pid=$!
+sampler_args=(--root-pid "$cmd_pid" --interval "$interval" --output "$csv_path")
+if [[ "$thread_flag" == "1" ]]; then
+  sampler_args+=(--thread)
+fi
+python3 "$script_dir/sampler.py" "${sampler_args[@]}" &
+sampler_pid=$!
 
-# Monitor ALL processes; we filter by our PID list in post-processing.
-# shellcheck disable=SC2086
-pidstat $pidstat_flags -p ALL "$interval" > "$pidstat_log" 2>/dev/null &
-pidstat_pid=$!
-
-# Wait for the target command to finish
+# Wait for the target command; capture its exit code.
 set +e
 wait "$cmd_pid"
 command_status=$?
 set -e
 
-# Stop sidecar and pidstat
-sleep 1
-kill "$tracker_pid" 2>/dev/null || true
-kill "$pidstat_pid" 2>/dev/null || true
-wait "$tracker_pid" 2>/dev/null || true
-wait "$pidstat_pid" 2>/dev/null || true
+# Ask the sampler to wrap up. It polls /proc/<cmd_pid> so it would notice
+# on its own shortly — SIGTERM just makes shutdown deterministic.
+kill -TERM "$sampler_pid" 2>/dev/null || true
+wait "$sampler_pid" 2>/dev/null || true
 
 end_ts=$(date +%s.%N)
 
 echo "  Exit:     $command_status"
 
-# Deduplicate the collected PIDs
-sort -un "$pids_file" -o "$pids_file"
+python3 "$script_dir/plot.py" "$csv_path" "$svg_path" --title "$prefix"
 
-# Generate CSV (filtered to our process tree) and SVG
-python3 "$script_dir/pidstat_to_csv.py" "$pidstat_log" "$csv_path" \
-  --pid-filter "$pids_file"
-python3 "$script_dir/plot_pidstat_svg.py" "$csv_path" "$svg_path" --title "$prefix"
-
-# Print summary
+# Print structured summary
 summary_json=$(python3 - "$csv_path" <<'PY'
 import csv
 import json
@@ -147,8 +113,8 @@ with open(path, newline="", encoding="utf-8") as fh:
     reader = csv.DictReader(fh)
     for row in reader:
         sample_count += 1
-        rss = float(row.get("rss_kb", 0))
-        cpu = float(row.get("cpu_pct", 0))
+        rss = float(row.get("rss_kb", 0) or 0)
+        cpu = float(row.get("cpu_pct", 0) or 0)
         peak_rss_kb = max(peak_rss_kb, rss)
         peak_cpu_pct = max(peak_cpu_pct, cpu)
         avg_rss_kb += rss
@@ -171,12 +137,6 @@ PY
 elapsed_sec=$(awk -v s="$start_ts" -v e="$end_ts" 'BEGIN { printf "%.2f", e - s }')
 elapsed_hms=$(awk -v s="$start_ts" -v e="$end_ts" 'BEGIN { elapsed = e - s; m = int(elapsed / 60); sec = elapsed - m * 60; printf "%d:%05.2f", m, sec }')
 
-# Clean up intermediate files unless asked to keep them
-if [[ "$keep_raw" != "1" ]]; then
-  rm -f "$pidstat_log" "$pids_file"
-fi
-
-# Print structured summary
 SUMMARY_JSON="$summary_json" ELAPSED_SEC="$elapsed_sec" ELAPSED_HMS="$elapsed_hms" \
 EXIT_CODE="$command_status" INTERVAL="$interval" \
 CSV_PATH="$csv_path" SVG_PATH="$svg_path" STDOUT_LOG="$stdout_log" \

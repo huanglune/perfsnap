@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """End-to-end test runner for perfsnap.
 
-Runs real workloads through collect_pidstat.sh, generates synthetic CSVs for
+Runs real workloads through collect.sh, generates synthetic CSVs for
 edge cases, then validates the output. All SVGs are saved to examples/ for
 visual review.
 
@@ -22,9 +22,8 @@ WORKLOADS = REPO / "tests" / "workloads"
 OUTPUT = REPO / "tests" / "output"
 EXAMPLES = REPO / "examples"
 
-COLLECTOR = SCRIPTS / "collect_pidstat.sh"
-PARSER = SCRIPTS / "pidstat_to_csv.py"
-PLOTTER = SCRIPTS / "plot_pidstat_svg.py"
+COLLECTOR = SCRIPTS / "collect.sh"
+PLOTTER = SCRIPTS / "plot.py"
 
 passed = 0
 failed = 0
@@ -48,7 +47,7 @@ def read_csv_rows(path: Path) -> list[dict]:
 def run_collector(
     name: str, workload_args: list[str], env_vars: dict[str, str] | None = None
 ) -> Path:
-    """Run collect_pidstat.sh with a workload and return CSV path."""
+    """Run collect.sh with a workload and return CSV path."""
     env = os.environ.copy()
     if env_vars:
         env.update(env_vars)
@@ -124,7 +123,7 @@ def test_thread_mode():
     csv_path = run_collector(
         "thread_mode",
         [sys.executable, str(WORKLOADS / "thread_mode.py")],
-        env_vars={"PIDSTAT_THREAD": "1"},
+        env_vars={"PERFSNAP_THREAD": "1"},
     )
     rows = read_csv_rows(csv_path)
     check("has samples", len(rows) > 0)
@@ -214,7 +213,7 @@ def test_interval_2s():
     csv_path = run_collector(
         "interval_2s",
         [sys.executable, str(WORKLOADS / "single_proc.py")],
-        env_vars={"PIDSTAT_INTERVAL": "2"},
+        env_vars={"PERFSNAP_INTERVAL": "2"},
     )
     rows = read_csv_rows(csv_path)
     check("has samples", len(rows) > 2)
